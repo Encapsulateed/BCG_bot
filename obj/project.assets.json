@@ -1270,11 +1270,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Alex\\Desktop\\BAS batut\\sample\\sample\\sample.csproj",
+      "projectUniqueName": "C:\\Users\\Alex\\Desktop\\BCG bot\\sample\\sample\\sample.csproj",
       "projectName": "sample",
-      "projectPath": "C:\\Users\\Alex\\Desktop\\BAS batut\\sample\\sample\\sample.csproj",
+      "projectPath": "C:\\Users\\Alex\\Desktop\\BCG bot\\sample\\sample\\sample.csproj",
       "packagesPath": "C:\\Users\\Alex\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Alex\\Desktop\\BAS batut\\sample\\sample\\obj\\",
+      "outputPath": "C:\\Users\\Alex\\Desktop\\BCG bot\\sample\\sample\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

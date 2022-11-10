@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "YYzhnNLgelUfAcDax+OXg1Glr68sc/tUjjKbBZNq/ZB4oQo+0MzHE5wvc/FjhElm4ykHsN3klgQeWucMbZx9fw==",
+  "dgSpecHash": "7PXzVJ0jf7yVCvJZKlYsZSRZhYVw1EGntY1SQHuDREGUUcp5wRSdKFrXLnfXFipIjPxZRAlzXF87WuCFL178dg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Alex\\Desktop\\BAS batut\\sample\\sample\\sample.csproj",
+  "projectFilePath": "C:\\Users\\Alex\\Desktop\\BCG bot\\sample\\sample\\sample.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Alex\\.nuget\\packages\\google.apis\\1.57.0\\google.apis.1.57.0.nupkg.sha512",
     "C:\\Users\\Alex\\.nuget\\packages\\google.apis.auth\\1.57.0\\google.apis.auth.1.57.0.nupkg.sha512",

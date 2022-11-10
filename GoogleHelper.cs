@@ -42,9 +42,13 @@ namespace sample
 
         public async Task<string> InputUser(User user , string where)
         {
+
+            string exp_1 = await SqlController.select<string>($"SELECT exp FROM users WHERE chatId={user.ChatId}");
+            string exp_2 = await SqlController.select<string>($"SELECT exp_hack FROM users WHERE chatId={user.ChatId}");
+
             var range = $"{where}!A:I";
             var valueRange = new ValueRange();
-            var objectList = new List<object>() { user.Code, user.Fio, user.University, user.Group, user.Birth, user.Contact, user.tg, DateTime.Now.ToShortDateString() };
+            var objectList = new List<object>() { user.Code, user.Fio, user.Group,user.Comand, user.Contact, user.tg, DateTime.Now.ToShortDateString(),exp_1,exp_2 };
             valueRange.Values = new List<IList<object>> { objectList };
 
             var appendRequest = service.Spreadsheets.Values.Append(valueRange, SpreadSheetId, range);
@@ -55,7 +59,7 @@ namespace sample
 
             int id = Convert.ToInt32(appendResonse.TableRange.Split('!')[1].Split(':')[1].Remove(0, 1)) + 1;
 
-            return "I" + id.ToString();
+            return "J" + id.ToString();
         }
 
         public async Task Update(string where, string exel_id, string value)

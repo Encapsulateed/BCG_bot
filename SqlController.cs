@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Telegram.Bot.Types;
-
+#pragma warning disable CS8601
 
 namespace sample
 {
@@ -81,17 +81,14 @@ namespace sample
                         user.ChatId = (long)reader[0];
                         user.Code = (int)reader[1];
                         user.CommandLine = (string)reader[2];
-                        user.IsAdmin = (bool)reader[3];
-                        user.Fio = (string)reader[4];
-                        user.University = (string)reader[5];
-                        user.Group = (string)reader[6];
-                        user.Birth = (string)reader[7];
-                        user.Contact = (string)reader[8];
-                        user.NeedScores = (bool)reader[9];
-                        user.IsRegEnd = (bool)reader[10];
-                        user.tg = (string)reader[11];
+                        user.Fio = (string)reader[3];
+                        user.tg = (string)reader[4];
+                        user.Group = (string)reader[5];
+                        user.Contact = (string)reader[6];
+                        user.Comand = (await GetComand((int)reader[7]))?.Title;
+                        user.IsRegEnd = (bool)reader[8];
+                        user.ExelId = (string)reader[9];
 
-                        user.ExelId = (string)reader[12];
                         await reader.CloseAsync();
 
 
@@ -119,16 +116,14 @@ namespace sample
                         user.ChatId = (long)reader[0];
                         user.Code = (int)reader[1];
                         user.CommandLine = (string)reader[2];
-                        user.IsAdmin = (bool)reader[3];
-                        user.Fio = (string)reader[4];
-                        user.University = (string)reader[5];
-                        user.Group = (string)reader[6];
-                        user.Birth = (string)reader[7];
-                        user.Contact = (string)reader[8];
-                        user.NeedScores = (bool)reader[9];
-                        user.IsRegEnd = (bool)reader[10];
-                        user.tg = (string)reader[11];
-                        user.ExelId = (string)reader[12];
+                        user.Fio = (string)reader[3];
+                        user.tg = (string)reader[4];
+                        user.Group = (string)reader[5];
+                        user.Contact = (string)reader[6];
+                        user.Comand = (await GetComand((int)reader[7]))?.Title;
+                        user.IsRegEnd = (bool)reader[8];
+                        user.ExelId = (string)reader[9];
+
 
                         await reader.CloseAsync();
 
@@ -140,7 +135,43 @@ namespace sample
 
             return user;
         }
- 
+       
+
+        public static async Task<List<User>> GetUsers()
+        {
+            List<User> users = new List<User>();
+            using (var conn = new MySqlConnection(connection))
+            {
+                using (MySqlCommand comm = new MySqlCommand($"SELECT * FROM users", conn))
+                {
+                    await conn.OpenAsync();
+
+                    using(MySqlDataReader reader = (MySqlDataReader)await comm.ExecuteReaderAsync())
+                    {
+                        while(await reader.ReadAsync())
+                        {
+                            var user = new User();
+                            user.ChatId = (long)reader[0];
+                            user.Code = (int)reader[1];
+                            user.CommandLine = (string)reader[2];
+                            user.Fio = (string)reader[3];
+                            user.tg = (string)reader[4];
+                            user.Group = (string)reader[5];
+                            user.Contact = (string)reader[6];
+
+                            user.Comand = (await GetComand((int)reader[7]))?.Title;
+
+                            users.Add(user);
+                        }
+                        await reader.CloseAsync();
+                    }              
+
+                    await conn.CloseAsync();
+                }
+            }
+
+            return users;
+        }
 
         public static async Task<Admin> GetAdmin(long chatId)
         {
@@ -172,6 +203,128 @@ namespace sample
 
             return admin;
         }
+        public static async Task<Comand> GetComand(int id)
+        {
+            Comand comand = new Comand();
+            using (var conn = new MySqlConnection(connection))
+            {
+                try
+                {
+                    using (MySqlCommand comm = new MySqlCommand($"SELECT * FROM comands WHERE id={id} LIMIT 1", conn))
+                    {
+                        await conn.OpenAsync();
+                        using (MySqlDataReader reader = (MySqlDataReader)await comm.ExecuteReaderAsync())
+                        {
+
+
+                            await reader.ReadAsync();
+
+                            comand.Id = id;
+                            comand.Captaine = (long)reader[1];
+                            comand.Title = (string)reader[2];
+
+
+
+                            await reader.CloseAsync();
+
+
+                        }
+                        await conn.CloseAsync();
+                    }
+
+                }
+                catch (Exception)
+                {
+
+                    return null;                
+                }
+            }
+
+            return comand;
+        }
+        public static async Task<List<Comand>> GetComandsPaginated(int lastId)
+        {
+            List<Comand> comands = new List<Comand>();
+            using (var conn = new MySqlConnection(connection))
+            {
+                try
+                {
+                    using (MySqlCommand comm = new MySqlCommand($"SELECT * FROM comands WHERE id>= {lastId} LIMIT 10", conn))
+                    {
+                        await conn.OpenAsync();
+                        using (MySqlDataReader reader = (MySqlDataReader)await comm.ExecuteReaderAsync())
+                        {
+
+                            
+                            while (await reader.ReadAsync())
+                            {
+                                var comand = new Comand();
+                                comand.Id = (int)reader[0];
+                                comand.Captaine = (long)reader[1];
+                                comand.Title = (string)reader[2];
+                                comand.Count = (int)reader[3];
+
+                                comands.Add(comand);
+                            }
+                            await reader.CloseAsync();
+
+
+                        }
+                        await conn.CloseAsync();
+                    }
+
+                }
+                catch (Exception)
+                {
+
+                    return null;
+                }
+            }
+
+            return comands;
+        }
+        public static async Task<List<Comand>> GetComands()
+        {
+            List<Comand> comands = new List<Comand>();
+            using (var conn = new MySqlConnection(connection))
+            {
+                try
+                {
+                    using (MySqlCommand comm = new MySqlCommand($"SELECT * FROM comands", conn))
+                    {
+                        await conn.OpenAsync();
+                        using (MySqlDataReader reader = (MySqlDataReader)await comm.ExecuteReaderAsync())
+                        {
+
+
+                            while (await reader.ReadAsync())
+                            {
+                                var comand = new Comand();
+                                comand.Id = (int)reader[0];
+                                comand.Captaine = (long)reader[1];
+                                comand.Title = (string)reader[2];
+                                comand.Count = (int)reader[3];
+
+                                comands.Add(comand);
+                            }
+                            await reader.CloseAsync();
+
+
+                        }
+                        await conn.CloseAsync();
+                    }
+
+                }
+                catch (Exception)
+                {
+
+                    return null;
+                }
+            }
+
+            return comands;
+        }
+
         public static async Task Update(string update)
         {
             using (var conn = new MySqlConnection(connection))
@@ -190,6 +343,7 @@ namespace sample
             }
         }
 
+    
        
     }
 }

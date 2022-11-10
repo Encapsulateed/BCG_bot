@@ -4,4 +4,18 @@ using sample;
 
 
 
-await Bot.Start();
+
+
+
+while (true)
+{
+	try
+	{
+		 await Bot.Start();
+    }
+	catch (Exception ex)
+	{
+		Console.WriteLine(ex);
+		throw;
+	}
+}

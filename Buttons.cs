@@ -49,6 +49,13 @@ namespace sample
                 InlineKeyboardButton.WithCallbackData("Назад","BackToGroup")
             }
         });
+        public static InlineKeyboardMarkup BackToInputFio = new InlineKeyboardMarkup(new[]
+       {
+             new[]
+            {
+                InlineKeyboardButton.WithCallbackData("Назад","BackToInputFio")
+            }
+        });
         public static InlineKeyboardMarkup BackToInputContact = new InlineKeyboardMarkup(new[]
         {
              new[]
@@ -96,6 +103,19 @@ namespace sample
             }
         });
 
+        public static InlineKeyboardMarkup IsCaptineKeyBoard = new InlineKeyboardMarkup(new[]
+        {
+            new[]
+            {
+                InlineKeyboardButton.WithCallbackData("Создать новую","createComand")
+            },
+            new[]
+            {
+               InlineKeyboardButton.WithCallbackData("Вступить в существующую","selectComand")
+
+            }
+        });
+
         public static InlineKeyboardMarkup RegEndBmstu = new InlineKeyboardMarkup(new[]
         {
                new[]
@@ -110,10 +130,6 @@ namespace sample
                new[]
                {
                 InlineKeyboardButton.WithCallbackData("Ошибся в номере телефона",$"ConcactError")
-               },
-               new[]
-               {
-                  InlineKeyboardButton.WithCallbackData("Изменить баллы на физкультуру",$"ScoresError")
                }
         });
         public static InlineKeyboardMarkup RegEndNotBmstu = new InlineKeyboardMarkup(new[]

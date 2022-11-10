@@ -20,6 +20,9 @@ namespace sample
         public string Birth { get; set; }
         public string Contact { get; set; }
         public string tg { get; set; }
+        public string Comand { get; set; }
+        public string Exp { get; set; }
+        public string exp_hack { get; set; }
 
         public bool IsAdmin { get; set; }
         public bool IsRegEnd { get; set; }
@@ -27,7 +30,7 @@ namespace sample
 
         public static async Task Registartion(long chatId,string tgLink)
         {
-            string insert = $"INSERT IGNORE INTO users (chatId,isAdmin,CommandLine,tgLink) VALUES({(long)chatId},{false},'{"Input_Fio"}','{tgLink}')";
+            string insert = $"INSERT IGNORE INTO users (chatId,CommandLine,tgLink) VALUES({(long)chatId},'{"Input_Fio"}','{tgLink}')";
             await SqlController.insert(insert);
         }
 
@@ -60,21 +63,22 @@ namespace sample
             // param 2 -> fv
             // param 3 -> registered
 
+            baseList = await SqlController.GetUsers();
 
-            for (int i = 0; i < 20; i++)
-            {
-                try
-                {
-                    User get = await GetUserByCode(i);
-                    if(get!=null)
-                        baseList.Add(get);
+            //for (int i = 0; i < 500; i++)
+            //{
+            //    try
+            //    {
+            //        User get = await GetUserByCode(i);
+            //        if (get != null)
+            //            baseList.Add(get);
 
-                }
-                catch (Exception)
-                {
+            //    }
+            //    catch (Exception)
+            //    {
 
-                }
-            }
+            //    }
+            //}
 
             try
             {
